@@ -112,9 +112,9 @@ export default function Navbar() {
             className="md:hidden relative z-[110] w-10 h-10 flex flex-col items-center justify-center gap-1.5 focus:outline-none group"
             aria-label="Toggle Menu"
           >
-            <span className={`w-6 h-[2px] bg-charcoal transition-all duration-300 origin-center ${isMenuOpen ? "rotate-45 translate-y-[4px]" : ""}`} />
+            <span className={`w-6 h-[2px] bg-charcoal transition-all duration-300 origin-center ${isMenuOpen ? "rotate-45 translate-y-[8px]" : ""}`} />
             <span className={`w-6 h-[2px] bg-charcoal transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
-            <span className={`w-6 h-[2px] bg-charcoal transition-all duration-300 origin-center ${isMenuOpen ? "-rotate-45 -translate-y-[4px]" : ""}`} />
+            <span className={`w-6 h-[2px] bg-charcoal transition-all duration-300 origin-center ${isMenuOpen ? "-rotate-45 -translate-y-[8px]" : ""}`} />
           </button>
         </div>
       </header>
