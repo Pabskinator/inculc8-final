@@ -62,7 +62,7 @@ export default function ScrollToTop() {
       ref={buttonRef}
       onClick={scrollToTop}
       aria-label="Scroll to top"
-      className="fixed bottom-8 right-8 z-[100] w-14 h-14 bg-amber-500 rounded-full shadow-2xl flex items-center justify-center text-charcoal group transition-all duration-300 hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 hidden"
+      className="fixed bottom-8 right-8 z-[100] w-14 h-14 bg-amber-500 rounded-full shadow-2xl flex items-center justify-center text-charcoal group transition-all duration-300 hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 hidden cursor-pointer"
       style={{ opacity: 0, transform: "scale(0)" }}
     >
       {/* Icon: Arrow Up */}
