@@ -72,7 +72,7 @@ export default function MissionVisionSection() {
       />
 
       {/* ── TOP WAVY DIVIDER (Cream spilling into Charcoal) ── */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none">
+      <div className="absolute -top-[1px] left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none">
         <svg
           viewBox="0 0 1200 120"
           preserveAspectRatio="none"
