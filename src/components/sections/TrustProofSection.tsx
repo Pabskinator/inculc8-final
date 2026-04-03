@@ -42,79 +42,112 @@ export default function TrustProofSection() {
   const pinWrapRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const nodes = gsap.utils.toArray<HTMLElement>('.protocol-node');
-    
-    // ── MASTER PINNING TIMELINE ──
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top top",
-        end: "+=180%", // Drastically reduced total scroll distance
-        pin: true,
-        scrub: 0.5, // Faster snap back
-        anticipatePin: 1
-      }
-    });
+    const mm = gsap.matchMedia();
 
-    // Initial state: Everything hidden
-    gsap.set(nodes, { opacity: 0, y: 50, display: 'none' });
-    gsap.set(".tp-header", { opacity: 0, scale: 0.9, y: 50 });
-
-    // Step 1: Reveal Center Header
-    tl.to(".tp-header", {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 1,
-      ease: "power3.out"
-    });
-
-    // Pause on header
-    tl.to({}, { duration: 0.3 }); // Shorter pause
-
-    // Step 2: Exit Header
-    tl.to(".tp-header", {
-      opacity: 0,
-      y: -50,
-      scale: 0.95,
-      duration: 0.6,
-      ease: "power2.inOut"
-    });
-
-    // Step 3: Iterate through engineering units
-    engineeringUnits.forEach((_, i) => {
-      // Reveal current node
-      tl.to(nodes[i], { 
-        display: 'flex', 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.8,
-        ease: "power2.out" 
+    // ── DESKTOP: PINNED EXPERIENCE ──
+    mm.add("(min-width: 1024px)", () => {
+      const nodes = gsap.utils.toArray<HTMLElement>('.protocol-node');
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top top",
+          end: "+=180%",
+          pin: true,
+          scrub: 0.5,
+          anticipatePin: 1
+        }
       });
 
-      // Spine growth animation synced with steps
-      tl.to(`.spine-segment-${i}`, {
-        scaleY: 1,
-        transformOrigin: "top",
-        duration: 0.8,
-        ease: "none"
-      }, "<"); // Run simultaneously with node reveal
+      gsap.set(nodes, { opacity: 0, y: 50, display: 'none' });
+      gsap.set(".tp-header", { opacity: 0, scale: 0.9, y: 50 });
 
-      // Pause briefly for reading
-      tl.to({}, { duration: 0.4 }); // Shorter pause before next slide
+      tl.to(".tp-header", {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1,
+        ease: "power3.out"
+      });
 
-      // Exit node if not the last one
-      if (i < engineeringUnits.length - 1) {
+      tl.to({}, { duration: 0.3 });
+
+      tl.to(".tp-header", {
+        opacity: 0,
+        y: -50,
+        scale: 0.95,
+        duration: 0.6,
+        ease: "power2.inOut"
+      });
+
+      engineeringUnits.forEach((_, i) => {
         tl.to(nodes[i], { 
-          opacity: 0, 
-          y: -50, 
-          duration: 0.6,
-          ease: "power3.in",
-          onComplete: () => { gsap.set(nodes[i], { display: 'none' }); } 
+          display: 'flex', 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8,
+          ease: "power2.out" 
         });
-      }
+
+        tl.to(`.spine-segment-${i}`, {
+          scaleY: 1,
+          transformOrigin: "top",
+          duration: 0.8,
+          ease: "none"
+        }, "<");
+
+        tl.to({}, { duration: 0.4 });
+
+        if (i < engineeringUnits.length - 1) {
+          tl.to(nodes[i], { 
+            opacity: 0, 
+            y: -50, 
+            duration: 0.6,
+            ease: "power3.in",
+            onComplete: () => { gsap.set(nodes[i], { display: 'none' }); } 
+          });
+        }
+      });
     });
 
+    // ── MOBILE/TABLET: NATIVE SCROLL REVEAL ──
+    mm.add("(max-width: 1023px)", () => {
+      // Reveal cards as they enter viewport
+      const nodes = gsap.utils.toArray<HTMLElement>('.protocol-node');
+      
+      nodes.forEach((node) => {
+        gsap.fromTo(node, 
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: node,
+              start: "top 85%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      });
+
+      // Special reveal for the header
+      gsap.fromTo(".tp-header", 
+        { opacity: 0, y: 20 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8, 
+          scrollTrigger: {
+            trigger: ".tp-header",
+            start: "top 80%"
+          }
+        }
+      );
+    });
+
+    return () => mm.revert();
   }, { scope: container });
 
   return (
@@ -130,9 +163,9 @@ export default function TrustProofSection() {
         />
       </div>
 
-      <div className="container-max h-screen relative z-10 px-6 flex flex-col items-center justify-center">
+      <div className="container-max min-h-screen relative z-10 px-6 py-20 lg:py-0 flex flex-col items-center justify-center">
         
-        <div className="tp-header absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-20">
+        <div className="tp-header relative lg:absolute lg:inset-0 flex flex-col items-center justify-center text-center px-6 z-20 mb-20 lg:mb-0">
           {/* Brand Subtitle */}
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-px bg-yellow-400/50" />
@@ -157,10 +190,10 @@ export default function TrustProofSection() {
         </div>
 
         {/* ── THE PINNED LOOM ── */}
-        <div ref={pinWrapRef} className="relative w-full max-w-4xl h-[600px] flex items-center justify-center mt-20">
+        <div ref={pinWrapRef} className="relative w-full max-w-4xl lg:h-[600px] h-auto flex items-center justify-center">
           
-          {/* Central Animated Spine */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-charcoal/5 -translate-x-1/2 z-0">
+          {/* Central Animated Spine - Desktop Only */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-charcoal/5 -translate-x-1/2 z-0 hidden lg:block">
             {engineeringUnits.map((_, i) => (
               <div 
                 key={i}
@@ -179,7 +212,7 @@ export default function TrustProofSection() {
               return (
                 <div 
                   key={p.index} 
-                  className={`protocol-node absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none`}
+                  className={`protocol-node relative lg:absolute lg:inset-0 flex flex-col items-center justify-center text-center pointer-events-none mb-12 lg:mb-0`}
                 >
                   <div className="max-w-2xl bg-cream/95 backdrop-blur-xl p-10 md:p-14 border border-charcoal/10 rounded-2xl pointer-events-auto shadow-2xl shadow-charcoal/5">
                     <span className="font-mono text-[10px] font-bold text-charcoal/40 tracking-[0.5em] uppercase mb-8 block">
