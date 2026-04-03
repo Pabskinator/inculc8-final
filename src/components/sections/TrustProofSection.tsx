@@ -163,9 +163,9 @@ export default function TrustProofSection() {
         />
       </div>
 
-      <div className="container-max min-h-screen relative z-10 px-6 py-20 lg:py-0 flex flex-col items-center justify-center">
+      <div className="container-max min-h-screen relative z-10 px-6 pt-40 pb-20 lg:py-0 flex flex-col items-center justify-center">
         
-        <div className="tp-header relative lg:absolute lg:inset-0 flex flex-col items-center justify-center text-center px-6 z-20 mb-20 lg:mb-0">
+        <div className="tp-header relative lg:absolute lg:inset-0 flex flex-col items-center justify-center text-center px-6 z-20 mb-12 lg:mb-0">
           {/* Brand Subtitle */}
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-px bg-yellow-400/50" />
