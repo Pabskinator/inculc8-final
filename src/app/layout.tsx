@@ -19,6 +19,9 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: "Inculc8 Solutions | Premium B2B Technology & AI Web Engineering",
   description: "World-Class Web Development. Next-Generation AI Automations. Your Web Architecture, Intelligently Integrated.",
+  icons: {
+    icon: "/images/logo/inculc8-logo-final.png",
+  },
 };
 
 export default function RootLayout({

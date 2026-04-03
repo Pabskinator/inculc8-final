@@ -64,10 +64,36 @@ export default function ContactSection() {
   const [activeInput, setActiveInput] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
-    setTimeout(() => setStatus("success"), 2000); 
+
+    const formData = new FormData(e.currentTarget);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: json,
+      });
+      const result = await response.json();
+      if (result.success) {
+        setStatus("success");
+      } else {
+        console.error(result);
+        setStatus("idle");
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("idle");
+      alert("Network error. Please check your connection.");
+    }
   };
 
   useGSAP(() => {
@@ -155,6 +181,9 @@ export default function ContactSection() {
               <div className="absolute top-0 right-0 w-80 h-80 bg-[#FBC02D]/5 rounded-full blur-[100px] pointer-events-none" />
               
               <form onSubmit={handleSubmit} className="relative z-10 w-full">
+                <input type="hidden" name="access_key" value="3d555215-fe19-4a76-9adb-85132c3f7239" />
+                <input type="hidden" name="subject" value="New Contact Form Submission - Inculc8" />
+                <input type="checkbox" name="botcheck" id="" style={{ display: "none" }} />
                 {status === "success" ? (
                   <div className="py-20 flex flex-col items-center text-center animate-fade-in">
                     <div className="w-24 h-24 rounded-full border border-green-500/10 bg-green-500/5 flex items-center justify-center mb-8">
@@ -173,6 +202,7 @@ export default function ContactSection() {
                       </label>
                       <input 
                         type="text" 
+                        name="name"
                         required
                         placeholder="E.g. Alexander Brooks"
                         className="w-full bg-transparent border-b border-charcoal/10 group-focus-within:border-[#FBC02D] px-0 py-5 font-sans text-xl md:text-2xl text-charcoal font-medium focus:outline-none transition-all duration-500 placeholder:text-charcoal/10"
@@ -187,6 +217,7 @@ export default function ContactSection() {
                       </label>
                       <input 
                         type="email" 
+                        name="email"
                         required
                         placeholder="E.g. contact@domain.ai"
                         className="w-full bg-transparent border-b border-charcoal/10 group-focus-within:border-[#FBC02D] px-0 py-5 font-sans text-xl md:text-2xl text-charcoal font-medium focus:outline-none transition-all duration-500 placeholder:text-charcoal/10"
@@ -200,6 +231,7 @@ export default function ContactSection() {
                         Project Details
                       </label>
                       <textarea 
+                        name="message"
                         required
                         rows={3}
                         placeholder="Tell us about your requirements..."
