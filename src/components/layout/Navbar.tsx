@@ -18,9 +18,10 @@ export default function Navbar() {
       if (scrolled !== isScrolled) {
         setIsScrolled(scrolled);
         if (navRef.current) {
+          const isMobile = window.innerWidth < 768;
           gsap.to(navRef.current, {
-            backgroundColor: scrolled ? "rgba(248, 241, 231, 0.92)" : "rgba(248, 241, 231, 0)",
-            backdropFilter: scrolled ? "blur(16px)" : "blur(0px)",
+            backgroundColor: scrolled ? (isMobile ? "rgba(248, 241, 231, 0.98)" : "rgba(248, 241, 231, 0.92)") : "rgba(248, 241, 231, 0)",
+            backdropFilter: scrolled && !isMobile ? "blur(16px)" : "blur(0px)",
             borderBottomColor: scrolled ? "rgba(47, 53, 58, 0.08)" : "rgba(47, 53, 58, 0)",
             duration: 0.3,
             ease: "power2.out"
@@ -122,7 +123,7 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       <div 
         ref={menuRef}
-        className="fixed inset-0 z-[90] bg-cream/98 backdrop-blur-2xl md:hidden overflow-hidden flex flex-col pt-32 px-10 invisible"
+        className="fixed inset-0 z-[90] bg-cream md:bg-cream/98 md:backdrop-blur-2xl md:hidden overflow-hidden flex flex-col pt-32 px-10 invisible"
         style={{ opacity: 0, transform: "translateY(-20px)" }}
       >
         <nav className="flex flex-col gap-8 text-left" ref={menuLinksRef}>

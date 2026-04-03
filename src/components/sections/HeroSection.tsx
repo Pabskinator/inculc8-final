@@ -64,7 +64,7 @@ export default function HeroSection() {
           trigger: container.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         },
       });
 
@@ -76,7 +76,7 @@ export default function HeroSection() {
           trigger: container.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         },
       });
 
@@ -88,7 +88,7 @@ export default function HeroSection() {
           trigger: container.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         },
       });
     },

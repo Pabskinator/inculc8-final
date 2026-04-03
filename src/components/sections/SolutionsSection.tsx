@@ -79,7 +79,7 @@ export default function SolutionsSection() {
         trigger: container.current,
         start: "top bottom",
         end: "bottom top",
-        scrub: true,
+        scrub: 1,
       }
     });
 
@@ -93,7 +93,7 @@ export default function SolutionsSection() {
           trigger: container.current,
           start: "top bottom",
           end: "bottom top",
-          scrub: true,
+          scrub: 1,
         }
       });
     });

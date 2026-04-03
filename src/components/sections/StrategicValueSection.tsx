@@ -96,7 +96,7 @@ export default function StrategicValueSection() {
       }
     );
 
-    // Individual Reveal for each card to eliminate lag
+    // Individual Reveal for each card
     const cards = gsap.utils.toArray<HTMLElement>('.value-module');
     cards.forEach((card) => {
       gsap.fromTo(card,
@@ -116,44 +116,50 @@ export default function StrategicValueSection() {
           }
         }
       );
+    });
 
-      // 3D Magnetic Tilt and Depth Lift
-      card.addEventListener("mousemove", (e: MouseEvent) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left; // x position within element
-        const y = e.clientY - rect.top; // y position within element
-        
-        // Calculate rotation (center is 0, edges are -15 to 15 deg)
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -10; // Invert Y for tilt
-        const rotateY = ((x - centerX) / centerX) * 10;
+    // ── DESKTOP ONLY: 3D Magnetic Tilt ──
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 1024px)", () => {
+      cards.forEach((card) => {
+        const mouseMove = (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
 
-        gsap.to(card, {
-          rotateX: rotateX,
-          rotateY: rotateY,
-          scale: 1.02,
-          translateZ: 20,
-          backgroundColor: "rgba(255, 255, 255, 0.08)",
-          borderColor: "rgba(255, 255, 255, 0.25)",
-          duration: 0.5,
-          ease: "power2.out",
-          overwrite: "auto"
-        });
-      });
+          gsap.to(card, {
+            rotateX: rotateX,
+            rotateY: rotateY,
+            scale: 1.02,
+            translateZ: 20,
+            backgroundColor: "rgba(255, 255, 255, 0.08)",
+            borderColor: "rgba(255, 255, 255, 0.25)",
+            duration: 0.5,
+            ease: "power2.out",
+            overwrite: "auto"
+          });
+        };
 
-      card.addEventListener("mouseleave", () => {
-        gsap.to(card, { 
-          rotateX: 0,
-          rotateY: 0,
-          scale: 1, 
-          translateZ: 0,
-          backgroundColor: "rgba(255, 255, 255, 0.04)",
-          borderColor: "rgba(255, 255, 255, 0.1)",
-          duration: 0.7,
-          ease: "elastic.out(1, 0.5)",
-          overwrite: "auto"
-        });
+        const mouseLeave = () => {
+          gsap.to(card, { 
+            rotateX: 0,
+            rotateY: 0,
+            scale: 1, 
+            translateZ: 0,
+            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            borderColor: "rgba(255, 255, 255, 0.1)",
+            duration: 0.7,
+            ease: "elastic.out(1, 0.5)",
+            overwrite: "auto"
+          });
+        };
+
+        card.addEventListener("mousemove", mouseMove);
+        card.addEventListener("mouseleave", mouseLeave);
       });
     });
 
@@ -203,7 +209,7 @@ export default function StrategicValueSection() {
           {pillars.map((pillar) => (
             <div 
               key={pillar.id}
-              className="value-module relative group bg-white/[0.03] border border-white/5 backdrop-blur-3xl p-10 flex flex-col h-full overflow-hidden will-change-[transform,opacity] backface-hidden transform-gpu rounded-xl"
+              className="value-module relative group bg-white/[0.08] lg:bg-white/[0.03] border border-white/10 lg:border-white/5 lg:backdrop-blur-3xl p-10 flex flex-col h-full overflow-hidden will-change-[transform,opacity] backface-hidden transform-gpu rounded-xl"
               style={{
                 boxShadow: `0 0 40px -10px ${pillar.accent}15`,
                 transformStyle: "preserve-3d"

@@ -51,7 +51,7 @@ body {
   }
 }
 
-/* Strategic Value Animated Icons - Living Logic */
+/* Strategic Value Animated Icons - Living Logic (Desktop Only for Performance) */
 @keyframes dash-move {
   to { stroke-dashoffset: -20; }
 }
@@ -68,31 +68,43 @@ body {
   50% { opacity: 1; }
 }
 
-.animate-dash-1 {
-  stroke-dasharray: 4 4;
-  animation: dash-move 1s linear infinite;
-}
-.animate-dash-2 {
-  stroke-dasharray: 6 6;
-  animation: dash-move 1.5s linear infinite reverse;
-}
-.animate-breath {
-  animation: icon-breath 4s ease-in-out infinite;
-  transform-origin: center;
-}
-.animate-spin-slow {
-  animation: icon-spin-slow 20s linear infinite;
-  transform-origin: center;
-}
-.animate-pulse {
-  animation: pulse-soft 2s ease-in-out infinite;
+@media (min-width: 1024px) {
+  .animate-dash-1 {
+    stroke-dasharray: 4 4;
+    animation: dash-move 1s linear infinite;
+  }
+  .animate-dash-2 {
+    stroke-dasharray: 6 6;
+    animation: dash-move 1.5s linear infinite reverse;
+  }
+  .animate-breath {
+    animation: icon-breath 4s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .animate-spin-slow {
+    animation: icon-spin-slow 20s linear infinite;
+    transform-origin: center;
+  }
+  .animate-pulse {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+
+  /* Hover Intensity Shifts */
+  .group:hover .animate-dash-1 { animation-duration: 0.5s; }
+  .group:hover .animate-dash-2 { animation-duration: 0.75s; }
+  .group:hover .animate-breath { animation-duration: 1.5s; }
+  .group:hover .animate-pulse { animation-duration: 1s; }
 }
 
-/* Hover Intensity Shifts */
-.group:hover .animate-dash-1 { animation-duration: 0.5s; }
-.group:hover .animate-dash-2 { animation-duration: 0.75s; }
-.group:hover .animate-breath { animation-duration: 1.5s; }
-.group:hover .animate-pulse { animation-duration: 1s; }
+/* Static Fallbacks for Mobile/Tablet */
+@media (max-width: 1023px) {
+  .animate-dash-1, .animate-dash-2 {
+    stroke-dasharray: 4 4;
+  }
+  .animate-breath, .animate-pulse {
+    opacity: 0.3;
+  }
+}
 
 @keyframes slideDown {
   0% { transform: translateY(-100%); }

@@ -214,7 +214,7 @@ export default function TrustProofSection() {
                   key={p.index} 
                   className={`protocol-node relative lg:absolute lg:inset-0 flex flex-col items-center justify-center text-center pointer-events-none mb-12 lg:mb-0`}
                 >
-                  <div className="max-w-2xl bg-cream/95 backdrop-blur-xl p-10 md:p-14 border border-charcoal/10 rounded-2xl pointer-events-auto shadow-2xl shadow-charcoal/5">
+                  <div className="max-w-2xl bg-white lg:bg-cream/95 lg:backdrop-blur-xl p-10 md:p-14 border border-charcoal/10 rounded-2xl pointer-events-auto shadow-2xl shadow-charcoal/5">
                     <span className="font-mono text-[10px] font-bold text-charcoal/40 tracking-[0.5em] uppercase mb-8 block">
                       {p.tag} // {p.index}
                     </span>
