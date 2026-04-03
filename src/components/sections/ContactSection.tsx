@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { Suspense } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -46,7 +47,7 @@ function InfinityLoopEngine({ active }: { active: boolean }) {
 
   return (
     <mesh ref={meshRef} scale={[0.8, 0.8, 0.8]} position={[-1, 0, 0]}>
-      <torusKnotGeometry args={[1.5, 0.4, 256, 32, 2, 3]} />
+      <torusKnotGeometry args={[1.5, 0.4, window.innerWidth < 1024 ? 64 : 256, window.innerWidth < 1024 ? 16 : 32, 2, 3]} />
       <meshStandardMaterial 
         color={active ? "#FBC02D" : "#2D2D2D"} 
         wireframe 
@@ -63,6 +64,27 @@ export default function ContactSection() {
   const container = useRef<HTMLElement>(null);
   const [activeInput, setActiveInput] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [isInView, setIsInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile for geometry optimization
+    setIsMobile(window.innerWidth < 1024);
+
+    // Smart Pre-warm: Initialize 3D context when 500px away from viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "500px" }
+    );
+
+    if (container.current) observer.observe(container.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -130,14 +152,18 @@ export default function ContactSection() {
       className="relative min-h-[85vh] bg-[#F8F1E7] text-charcoal overflow-hidden py-24 md:py-32 flex items-center"
     >
       {/* ── IMMERSIVE 3D BACKGROUND ── */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-        <Canvas camera={{ position: [0, 0, 8], fov: 45 }} gl={{ antialias: true, alpha: true }}>
-          <ambientLight intensity={1.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} color="#FBC02D" />
-          <pointLight position={[-10, -10, -10]} intensity={1} color="#2D2D2D" />
-          <InfinityLoopEngine active={activeInput || status === "submitting"} />
-          <Rig />
-        </Canvas>
+      <div className={`absolute inset-0 z-0 pointer-events-none transition-opacity duration-1000 ${isInView ? "opacity-60" : "opacity-0"}`}>
+        {isInView && (
+          <Suspense fallback={null}>
+            <Canvas camera={{ position: [0, 0, 8], fov: 45 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}>
+              <ambientLight intensity={1.5} />
+              <pointLight position={[10, 10, 10]} intensity={1} color="#FBC02D" />
+              <pointLight position={[-10, -10, -10]} intensity={1} color="#2D2D2D" />
+              <InfinityLoopEngine active={activeInput || status === "submitting"} />
+              <Rig />
+            </Canvas>
+          </Suspense>
+        )}
       </div>
 
       {/* Decorative Branding Texture */}

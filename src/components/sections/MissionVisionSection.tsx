@@ -11,31 +11,41 @@ export default function MissionVisionSection() {
   const container = useRef<HTMLElement>(null);
 
   useGSAP(() => {
-    // Kinetic Typography Reveal
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top 70%",
-        end: "center center",
-        scrub: 1,
-      }
+    // Kinetic Typography Reveal - Simplified for Mobile to prevent lag
+    const mm = gsap.matchMedia();
+    mm.add({
+      isDesktop: "(min-width: 1024px)",
+      isMobile: "(max-width: 1023px)"
+    }, (context) => {
+      const { isDesktop } = context.conditions as any;
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top 70%",
+          end: "center center",
+          scrub: 1,
+        }
+      });
+
+      // Slide in Solid Text
+      tl.from(".mv-text-solid", {
+        xPercent: isDesktop ? -15 : 0,
+        y: isDesktop ? 0 : 20,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power3.out"
+      }, 0);
+
+      // Slide in Hollow Text
+      tl.from(".mv-text-hollow", {
+        xPercent: isDesktop ? 15 : 0,
+        y: isDesktop ? 0 : 20,
+        opacity: 0,
+        duration: 1.5,
+        ease: "power3.out"
+      }, 0);
     });
-
-    // Slide in Solid Text from left
-    tl.from(".mv-text-solid", {
-      xPercent: -15,
-      opacity: 0,
-      duration: 1.5,
-      ease: "power3.out"
-    }, 0);
-
-    // Slide in Hollow Text from right
-    tl.from(".mv-text-hollow", {
-      xPercent: 15,
-      opacity: 0,
-      duration: 1.5,
-      ease: "power3.out"
-    }, 0);
 
     // Fade in mission/vision blocks
     gsap.from(".mv-block", {
@@ -59,9 +69,9 @@ export default function MissionVisionSection() {
       className="relative pt-48 pb-48 bg-charcoal text-cream overflow-hidden selection:bg-indigo selection:text-white"
     >
       {/* ── IMMERSIVE BACKGROUND ── */}
-      {/* Ambient Glows */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-900/10 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-900/5 rounded-full blur-[120px] pointer-events-none -translate-x-1/3 translate-y-1/3" />
+      {/* Ambient Glows - Hidden on mobile to save GPU */}
+      <div className="hidden lg:block absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-900/10 rounded-full blur-[150px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
+      <div className="hidden lg:block absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-900/5 rounded-full blur-[120px] pointer-events-none -translate-x-1/3 translate-y-1/3" />
 
       {/* Premium SVG Topography/Workflow Pattern */}
       <div
