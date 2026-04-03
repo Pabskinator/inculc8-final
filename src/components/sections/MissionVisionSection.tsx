@@ -56,7 +56,7 @@ export default function MissionVisionSection() {
     <section
       id="mission"
       ref={container}
-      className="relative pt-48 pb-48 bg-charcoal text-cream overflow-hidden selection:bg-indigo selection:text-white -mt-[2px]"
+      className="relative pt-48 pb-48 bg-charcoal text-cream overflow-hidden selection:bg-indigo selection:text-white"
     >
       {/* ── IMMERSIVE BACKGROUND ── */}
       {/* Ambient Glows */}

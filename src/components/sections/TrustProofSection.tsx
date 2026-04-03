@@ -247,18 +247,6 @@ export default function TrustProofSection() {
 
       </div>
 
-      {/* ── SEAMLESS BOTTOM WAVE (MATCH CREAM) ── */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20 pointer-events-none transform translate-y-[99%]">
-        <svg 
-          viewBox="0 0 1200 120" 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="relative block w-full h-[100px] md:h-[180px]"
-          preserveAspectRatio="none"
-          fill="#F8F1E7"
-        >
-          <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,38.5,88.51,27.08,181.69,45.24,274.2,36.5,69.57-6.57,135-34.82,204.8-40.5,49.1-4,97.7,1.88,138,15.5V0Z" />
-        </svg>
-      </div>
     </section>
   );
 }
