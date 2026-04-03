@@ -163,7 +163,7 @@ export default function TrustProofSection() {
         />
       </div>
 
-      <div className="container-max min-h-screen relative z-10 px-6 pt-32 pb-20 lg:py-0 flex flex-col items-center lg:justify-center justify-start">
+      <div className="container-max min-h-screen relative z-10 px-6 pt-48 pb-20 lg:py-0 flex flex-col items-center lg:justify-center justify-start">
         
         <div className="tp-header relative lg:absolute lg:inset-0 flex flex-col items-center justify-center text-center px-6 z-10 mb-12 lg:mb-0">
           {/* Brand Subtitle */}
@@ -175,7 +175,7 @@ export default function TrustProofSection() {
             <div className="w-8 h-px bg-yellow-400/50" />
           </div>
 
-          <h2 className="font-sans font-black text-6xl md:text-9xl tracking-tighter uppercase leading-[0.8] mb-4 mt-12 lg:mt-0">
+          <h2 className="font-sans font-black text-6xl md:text-9xl tracking-tighter uppercase leading-[0.8] mb-4 mt-20 lg:mt-0">
             Engineering <br/>
             <span 
               className="italic text-indigo"
