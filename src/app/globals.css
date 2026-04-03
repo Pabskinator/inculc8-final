@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
+@theme {
+  --color-indigo: #3F51B5;
+  --color-amber: #FBC02D;
+  --color-teal: #26C6DA;
+  --color-charcoal: #2F353A;
+  --color-cream: #F8F1E7;
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-charcoal);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-roboto-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F8F1E7;
+  --foreground: #2F353A;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Custom Selection */
+::selection {
+  background: var(--color-indigo);
+  color: var(--color-cream);
+}
+
+/* Common Layout Constraints */
+.container-max {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@layer utilities {
+  .animate-slide-down {
+    animation: slideDown 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Strategic Value Animated Icons - Living Logic */
+@keyframes dash-move {
+  to { stroke-dashoffset: -20; }
+}
+@keyframes icon-breath {
+  0%, 100% { opacity: 0.1; transform: scale(0.95); }
+  50% { opacity: 0.4; transform: scale(1.05); }
+}
+@keyframes icon-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-dash-1 {
+  stroke-dasharray: 4 4;
+  animation: dash-move 1s linear infinite;
+}
+.animate-dash-2 {
+  stroke-dasharray: 6 6;
+  animation: dash-move 1.5s linear infinite reverse;
+}
+.animate-breath {
+  animation: icon-breath 4s ease-in-out infinite;
+  transform-origin: center;
+}
+.animate-spin-slow {
+  animation: icon-spin-slow 20s linear infinite;
+  transform-origin: center;
+}
+.animate-pulse {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Hover Intensity Shifts */
+.group:hover .animate-dash-1 { animation-duration: 0.5s; }
+.group:hover .animate-dash-2 { animation-duration: 0.75s; }
+.group:hover .animate-breath { animation-duration: 1.5s; }
+.group:hover .animate-pulse { animation-duration: 1s; }
+
+@keyframes slideDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
 }

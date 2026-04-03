@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inculc8: The Future of Digital Architecture
 
-## Getting Started
+**Architect The Future Of Digital.**
 
-First, run the development server:
+Inculc8 is a high-performance corporate platform engineered for ambitious businesses. It combines elite web architecture, intelligent AI workflow automation, and immersive 3D digital experiences to drive unparalleled growth.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Vision
+
+To act as the invisible engine for forward-thinking enterprises. We architect pristine, high-performance web applications and engineer seamless workflow automations that eliminate manual friction, empowering organizations to scale efficiently.
+
+## ✨ Key Features
+
+- **Living Logic Animations**: Fluid, high-fidelity interactions powered by GSAP and ScrollTrigger.
+- **TorusKnot 3D Engine**: Immersive, interactive 3D components integrated via React-Three-Fiber.
+- **Intelligent Workflows**: Strategic digital systems designed for performance and scalability.
+- **Premium Aesthetic**: A sophisticated Charcoal, Cream, Amber, and Indigo visual language.
+- **Elite Architecture**: Built on Next.js 16 and React 19 for maximum speed and security.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Animation**: [GSAP](https://greensock.com/gsap/) & [ScrollTrigger](https://greensock.com/scrolltrigger/)
+- **3D Graphics**: [Three.js](https://threejs.org/), [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber/), [@react-three/drei](https://docs.pmnd.rs/drei/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Type Safety**: [TypeScript](https://www.typescriptlang.org/)
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- **Node.js**: 20.x or higher
+- **npm**: 10.x or higher
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Pabskinator/inculc8-final.git
+   cd inculc8-final
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+├── app/          # Next.js App Router (pages & layout)
+├── components/   # UI System
+│   ├── layout/   # Global layout elements (Navbar, Footer)
+│   └── sections/ # Page-specific sections (Hero, Solutions, etc.)
+├── store/        # Zustand state management
+└── styles/       # Global CSS and Tailwind configuration
+public/           # Static assets (3D models, videos, images)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📄 License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is private and proprietary. All rights reserved by Inculc8.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Developed with ❤️ by the Inculc8 Team.
