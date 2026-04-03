@@ -1,13 +1,11 @@
-# Stage 1: Install dependencies only when needed
+# Stage 1: Install dependencies
 FROM node:21-alpine AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine for details on libc6-compat
-# This is often needed for dynamic libraries used by modules like sharp.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-# It's better to copy lockfiles individually to leverage Docker cache
 COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+
+# 1. Install standard dependencies
 RUN \
     if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
     elif [ -f package-lock.json ]; then npm ci; \
@@ -15,6 +13,8 @@ RUN \
     else echo "Lockfile not found." && exit 1; \
     fi
 
+# 2. ADD THIS LINE: Manually force the Alpine-specific Tailwind binary
+RUN npm install @tailwindcss/oxide-linux-x64-musl --save-optional --force
 
 # Stage 2: Rebuild the source code only when needed
 FROM node:21-alpine AS builder
