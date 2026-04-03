@@ -1,0 +1,39 @@
+# Dependency directories (never copy these, Docker installs them)
+node_modules
+/npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build output and local next state
+.next
+out
+
+# Version control (Docker doesn't need git history)
+.git
+.gitignore
+
+# Environment files (Docker uses the environment variables you set in Compose)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*.local
+
+# IDE configurations
+.idea
+.vscode
+.sublime-project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# macOS noise
+.DS_Store
+
+# Miscellaneous docs
+README.md
+LICENSE
+docs/
